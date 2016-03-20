@@ -1,4 +1,9 @@
+import uuid
+
 class Warlock:
+    def __init__(self):
+        #identifier
+        self.id=uuid.uuid4()
     #Hit points
     HP=15
     #simple mind control
@@ -8,20 +13,20 @@ class Warlock:
     isAfraid=False
 
     def parseGestures(self,gestures): #maybe only parse opponent gestures in one fn
-        LH=[a for (a,b) in gestures]
-        RH=[b for (a,b) in gestures]
+        LH=[a for (a,b,c,d) in gestures]
+        RH=[b for (a,b,c,d) in gestures]
         
         #simple mind control
-        if LH[-3:]==['F','F','F'] or RH[-3:]=['F','F','F']:
+        if LH[-3:]==['F','F','F'] or RH[-3:]==['F','F','F']:
             self.isParalyzed=True
             
-        if LH[-3:]==['D','S','F'] or RH[-3:]=['D','S','F']:
+        if LH[-3:]==['D','S','F'] or RH[-3:]==['D','S','F']:
             self.isMaladroit=True
 
-        if LH[-3:]==['S','W','D'] or RH[-3:]=['S','W','D']:
+        if LH[-3:]==['S','W','D'] or RH[-3:]==['S','W','D']:
             self.isAfraid=True
 
-        if LH[-3:]==['D','P','P'] or RH[-3:]=['D','P','P']:
+        if LH[-3:]==['D','P','P'] or RH[-3:]==['D','P','P']:
             self.isAfraid=True
 
 
@@ -29,10 +34,14 @@ class Warlock:
 p1=Warlock()
 
 #first pass: read in array of gestures, print out HP and status
-#gestures=list of tuples (RH, LH)
-gestures=[('F','W'), ('F','W'), ('F', 'P')]
+#gestures=list of tuples (LH, RH, LH target, RH target)
+gestures=[('F','W',0,0), ('F','W',0,0), ('F', 'P',p1.id,0)]
 
 p1.parseGestures(gestures)
 
 print p1.isParalyzed
+print p1.id
 
+p2=Warlock()
+print p2.isParalyzed
+print p2.id
